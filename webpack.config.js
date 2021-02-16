@@ -11,6 +11,26 @@ module.exports = {
     schedule: "./assets/js/schedule.js",
     tickets: "./assets/js/tickets.js",
   },
+  module: {
+    rules: [
+      {
+        test: /\.jpg$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name (file) {
+                return "[path][name].[ext]"
+              },
+              publicPath: function(url) {
+                return url.replace("../", "/assets/")
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
   output: {
     filename: "[name].bundle.js",
     path: __dirname + "/dist",
@@ -20,9 +40,9 @@ module.exports = {
       $: "jquery",
       jQuery: "jquery",
     }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: "static", // the report outputs to an HTML file in the dist folder
-    }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerMode: "static", // the report outputs to an HTML file in the dist folder
+    // }),
   ],
   mode: "development",
 };
